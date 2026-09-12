@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports - Admin Dashboard</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- external style.css -->
+  <link rel="stylesheet" href="./../../css/style.css">
+</head>
+
+<body>
+
+  <!-- ====================  ADMIN NAVIGATION ==================== -->
+  <nav class="navbar navbar-expand-lg sticky-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white" href="/admin/dashboard">
+        <i class="fas fa-hospital-user me-2" aria-hidden="true"></i> Admin Panel
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarAdmin">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+          <li class="nav-item">
+            <a href="#" class="nav-link text-white"><i class="fas fa-bell me-2"></i>Notifications</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/profile" class="nav-link text-white"><i class="fas fa-user me-2"></i>Profile</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin" class="btn btn-outline-light ms-3">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="position-sticky pt-3">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/dashboard">
+                <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/patients">
+                <i class="fas fa-users me-2"></i> Patients
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/appointments">
+                <i class="fas fa-calendar-check me-2"></i> Appointments
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/doctors">
+                <i class="fas fa-user-md me-2"></i> Doctors
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/services">
+                <i class="fas fa-cogs me-2"></i> Services
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/admin/reports">
+                <i class="fas fa-chart-bar me-2"></i> Reports
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/settings">
+                <i class="fas fa-cog me-2"></i> Settings
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Main content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Hospital Reports & Analytics</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <button type="button" class="btn btn-primary me-2">
+              <i class="fas fa-download me-2"></i>Export
+            </button>
+            <button type="button" class="btn btn-secondary">
+              <i class="fas fa-print me-2"></i>Print
+            </button>
+          </div>
+        </div>
+
+        <!-- Report Filters -->
+        <div class="row mb-4">
+          <div class="col-md-3">
+            <label class="form-label">Report Type</label>
+            <select class="form-select" id="reportType">
+              <option value="">Select Report</option>
+              <option value="patients">Patient Reports</option>
+              <option value="appointments">Appointment Reports</option>
+              <option value="revenue">Revenue Reports</option>
+              <option value="doctors">Doctor Performance</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Date Range</label>
+            <select class="form-select" id="dateRange">
+              <option value="">Select Range</option>
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+              <option value="quarter">This Quarter</option>
+              <option value="year">This Year</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Department</label>
+            <select class="form-select" id="department">
+              <option value="">All Departments</option>
+              <option value="cardiology">Cardiology</option>
+              <option value="neurology">Neurology</option>
+              <option value="orthopedics">Orthopedics</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">&nbsp;</label>
+            <button type="button" class="btn btn-primary w-100">
+              <i class="fas fa-search me-2"></i>Generate Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="row mb-4">
+          <div class="col-md-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <small class="text-muted d-block">Total Patients</small>
+                    <h4 class="text-primary mb-0">1,245</h4>
+                  </div>
+                  <i class="fas fa-users text-primary fa-2x opacity-25"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <small class="text-muted d-block">Completed Appointments</small>
+                    <h4 class="text-success mb-0">892</h4>
+                  </div>
+                  <i class="fas fa-check-circle text-success fa-2x opacity-25"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <small class="text-muted d-block">Total Revenue</small>
+                    <h4 class="text-info mb-0">$45,230</h4>
+                  </div>
+                  <i class="fas fa-dollar-sign text-info fa-2x opacity-25"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <small class="text-muted d-block">Active Doctors</small>
+                    <h4 class="text-warning mb-0">34</h4>
+                  </div>
+                  <i class="fas fa-user-md text-warning fa-2x opacity-25"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reports Table -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="mb-0">Monthly Performance Summary</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Month</th>
+                    <th>Patients</th>
+                    <th>Appointments</th>
+                    <th>Completed</th>
+                    <th>Revenue</th>
+                    <th>Satisfaction</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>January 2026</td>
+                    <td>312</td>
+                    <td>245</td>
+                    <td>234 (96%)</td>
+                    <td>$12,450</td>
+                    <td><span class="badge bg-success">4.8/5</span></td>
+                    <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                  </tr>
+                  <tr>
+                    <td>February 2026</td>
+                    <td>328</td>
+                    <td>258</td>
+                    <td>252 (98%)</td>
+                    <td>$13,120</td>
+                    <td><span class="badge bg-success">4.9/5</span></td>
+                    <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                  </tr>
+                  <tr>
+                    <td>March 2026</td>
+                    <td>305</td>
+                    <td>242</td>
+                    <td>225 (93%)</td>
+                    <td>$11,890</td>
+                    <td><span class="badge bg-warning">4.6/5</span></td>
+                    <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                  </tr>
+                  <tr>
+                    <td>April 2026</td>
+                    <td>345</td>
+                    <td>287</td>
+                    <td>281 (98%)</td>
+                    <td>$14,770</td>
+                    <td><span class="badge bg-success">4.9/5</span></td>
+                    <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Department Reports -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">Patient Distribution by Department</h5>
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Cardiology</span>
+                    <span>28%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar bg-primary" style="width: 28%"></div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Neurology</span>
+                    <span>22%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar bg-info" style="width: 22%"></div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Orthopedics</span>
+                    <span>25%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar bg-success" style="width: 25%"></div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Dermatology</span>
+                    <span>15%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar bg-warning" style="width: 15%"></div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Other</span>
+                    <span>10%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar bg-secondary" style="width: 10%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">Appointment Status Overview</h5>
+              </div>
+              <div class="card-body">
+                <div class="row text-center">
+                  <div class="col-6 mb-3">
+                    <h4 class="text-success">892</h4>
+                    <small class="text-muted">Completed</small>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h4 class="text-info">124</h4>
+                    <small class="text-muted">Pending</small>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h4 class="text-danger">45</h4>
+                    <small class="text-muted">Cancelled</small>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h4 class="text-warning">67</h4>
+                    <small class="text-muted">Rescheduled</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Js start -->
+  <script src="../js/js.js"></script>
+  <!-- Js end -->
+</body>
+
+</html>

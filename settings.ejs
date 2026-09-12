@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Admin Dashboard</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- external style.css -->
+  <link rel="stylesheet" href="./../../css/style.css">
+</head>
+
+<body>
+
+  <!-- ====================  ADMIN NAVIGATION ==================== -->
+  <nav class="navbar navbar-expand-lg sticky-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white" href="/admin/dashboard">
+        <i class="fas fa-hospital-user me-2" aria-hidden="true"></i> Admin Panel
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarAdmin">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+          <li class="nav-item">
+            <a href="#" class="nav-link text-white"><i class="fas fa-bell me-2"></i>Notifications</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/profile" class="nav-link text-white"><i class="fas fa-user me-2"></i>Profile</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin" class="btn btn-outline-light ms-3">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="position-sticky pt-3">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/dashboard">
+                <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/patients">
+                <i class="fas fa-users me-2"></i> Patients
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/appointments">
+                <i class="fas fa-calendar-check me-2"></i> Appointments
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/doctors">
+                <i class="fas fa-user-md me-2"></i> Doctors
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/services">
+                <i class="fas fa-cogs me-2"></i> Services
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/reports">
+                <i class="fas fa-chart-bar me-2"></i> Reports
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/admin/settings">
+                <i class="fas fa-cog me-2"></i> Settings
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Main content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">System Settings</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <button type="button" class="btn btn-success">
+              <i class="fas fa-save me-2"></i>Save Changes
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Settings Navigation -->
+          <div class="col-md-3">
+            <div class="list-group">
+              <a href="#general" class="list-group-item list-group-item-action active" data-bs-toggle="list">
+                <i class="fas fa-cog me-2"></i> General Settings
+              </a>
+              <a href="#hospital" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                <i class="fas fa-hospital me-2"></i> Hospital Info
+              </a>
+              <a href="#security" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                <i class="fas fa-lock me-2"></i> Security
+              </a>
+              <a href="#email" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                <i class="fas fa-envelope me-2"></i> Email Settings
+              </a>
+              <a href="#notifications" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                <i class="fas fa-bell me-2"></i> Notifications
+              </a>
+              <a href="#backup" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                <i class="fas fa-database me-2"></i> Backup
+              </a>
+            </div>
+          </div>
+
+          <!-- Settings Content -->
+          <div class="col-md-9">
+            <!-- General Settings -->
+            <div class="card mb-4">
+              <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-cog me-2"></i>General Settings</h5>
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <label for="siteName" class="form-label">Site Name</label>
+                  <input type="text" class="form-control" id="siteName" value="Hope Hospital">
+                </div>
+                <div class="mb-3">
+                  <label for="timezone" class="form-label">Timezone</label>
+                  <select class="form-select" id="timezone">
+                    <option>UTC</option>
+                    <option selected>EST</option>
+                    <option>CST</option>
+                    <option>MST</option>
+                    <option>PST</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="language" class="form-label">Default Language</label>
+                  <select class="form-select" id="language">
+                    <option selected>English</option>
+                    <option>Spanish</option>
+                    <option>French</option>
+                    <option>German</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="dateFormat" class="form-label">Date Format</label>
+                  <select class="form-select" id="dateFormat">
+                    <option selected>MM/DD/YYYY</option>
+                    <option>DD/MM/YYYY</option>
+                    <option>YYYY-MM-DD</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hospital Information -->
+            <div class="card mb-4">
+              <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fas fa-hospital me-2"></i>Hospital Information</h5>
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <label for="hospitalName" class="form-label">Hospital Name</label>
+                  <input type="text" class="form-control" id="hospitalName" value="Hope Hospital">
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="phone" value="+1 (555) 123-4567">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email" value="info@hopehospital.com">
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="address" class="form-label">Address</label>
+                  <input type="text" class="form-control" id="address" value="123 Medical Center Dr, Healthcare City, HC 12345">
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" class="form-control" id="city" value="Healthcare City">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" class="form-control" id="country" value="United States">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Security Settings -->
+            <div class="card mb-4">
+              <div class="card-header bg-danger text-white">
+                <h5 class="mb-0"><i class="fas fa-lock me-2"></i>Security Settings</h5>
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="twoFactor" checked>
+                    <label class="form-check-label" for="twoFactor">
+                      Enable Two-Factor Authentication
+                    </label>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="sessionTimeout" checked>
+                    <label class="form-check-label" for="sessionTimeout">
+                      Auto Logout on Inactivity
+                    </label>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="sessionTime" class="form-label">Session Timeout (minutes)</label>
+                  <input type="number" class="form-control" id="sessionTime" value="30" min="5" max="240">
+                </div>
+                <div class="mb-3">
+                  <label for="passwordPolicy" class="form-label">Password Policy</label>
+                  <select class="form-select" id="passwordPolicy">
+                    <option>Basic (min 6 characters)</option>
+                    <option selected>Standard (min 8 characters, mixed case)</option>
+                    <option>Strong (min 12 characters, special characters)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Email Settings -->
+            <div class="card mb-4">
+              <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="fas fa-envelope me-2"></i>Email Settings</h5>
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <label for="smtpServer" class="form-label">SMTP Server</label>
+                  <input type="text" class="form-control" id="smtpServer" value="smtp.gmail.com">
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="smtpPort" class="form-label">SMTP Port</label>
+                    <input type="number" class="form-control" id="smtpPort" value="587">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="smtpUser" class="form-label">SMTP Username</label>
+                    <input type="email" class="form-control" id="smtpUser" value="noreply@hopehospital.com">
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="smtpSSL" checked>
+                    <label class="form-check-label" for="smtpSSL">
+                      Use SSL/TLS Encryption
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="card mb-4">
+              <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0"><i class="fas fa-bell me-2"></i>Notification Settings</h5>
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="appointmentNotif" checked>
+                    <label class="form-check-label" for="appointmentNotif">
+                      Appointment Reminders
+                    </label>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="patientNotif" checked>
+                    <label class="form-check-label" for="patientNotif">
+                      New Patient Registration Alerts
+                    </label>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="reportNotif" checked>
+                    <label class="form-check-label" for="reportNotif">
+                      Daily Report Digest
+                    </label>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="systemNotif" checked>
+                    <label class="form-check-label" for="systemNotif">
+                      System Alerts & Warnings
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Backup Settings -->
+            <div class="card mb-4">
+              <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0"><i class="fas fa-database me-2"></i>Backup & Recovery</h5>
+              </div>
+              <div class="card-body">
+                <div class="alert alert-info mb-3">
+                  <i class="fas fa-info-circle me-2"></i>
+                  Last backup: March 5, 2026 at 02:30 AM
+                </div>
+                <div class="mb-3">
+                  <label for="backupFrequency" class="form-label">Backup Frequency</label>
+                  <select class="form-select" id="backupFrequency">
+                    <option>Daily</option>
+                    <option selected>Weekly</option>
+                    <option>Monthly</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="backupTime" class="form-label">Backup Time</label>
+                  <input type="time" class="form-control" id="backupTime" value="02:30">
+                </div>
+                <div class="mb-3">
+                  <label for="retentionDays" class="form-label">Retention Period (days)</label>
+                  <input type="number" class="form-control" id="retentionDays" value="90" min="7" max="365">
+                </div>
+                <div class="d-flex gap-2">
+                  <button type="button" class="btn btn-primary">
+                    <i class="fas fa-download me-2"></i>Backup Now
+                  </button>
+                  <button type="button" class="btn btn-outline-primary">
+                    <i class="fas fa-history me-2"></i>View Backup History
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Js start -->
+  <script src="../js/js.js"></script>
+  <!-- Js end -->
+</body>
+
+</html>

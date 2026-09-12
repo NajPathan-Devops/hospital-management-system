@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patients - Admin Dashboard</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- external style.css -->
+  <link rel="stylesheet" href="./../../css/style.css">
+</head>
+<body>
+
+<!-- ====================  ADMIN NAVIGATION ==================== -->
+<nav class="navbar navbar-expand-lg sticky-top bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="/admin/dashboard">
+      <i class="fas fa-hospital-user me-2" aria-hidden="true"></i> Admin Panel
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarAdmin">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+        <li class="nav-item">
+          <a href="#" class="nav-link text-white"><i class="fas fa-bell me-2"></i>Notifications</a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/profile" class="nav-link text-white"><i class="fas fa-user me-2"></i>Profile</a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin" class="btn btn-outline-light ms-3">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3">
+          <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/dashboard">
+              <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/admin/patients">
+              <i class="fas fa-users me-2"></i> Patients
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/appointments">
+              <i class="fas fa-calendar-check me-2"></i> Appointments
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/doctors">
+              <i class="fas fa-user-md me-2"></i> Doctors
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/services">
+              <i class="fas fa-cogs me-2"></i> Services
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/reports">
+              <i class="fas fa-chart-bar me-2"></i> Reports
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/settings">
+              <i class="fas fa-cog me-2"></i> Settings
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Patients Management</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <button type="button" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>Add New Patient
+          </button>
+        </div>
+      </div>
+
+      <!-- Search and Filter -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <input type="text" class="form-control" placeholder="Search patients..." id="searchInput">
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" id="statusFilter">
+            <option value="">All Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" id="departmentFilter">
+            <option value="">All Departments</option>
+            <option value="cardiology">Cardiology</option>
+            <option value="neurology">Neurology</option>
+            <option value="orthopedics">Orthopedics</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Patients Table -->
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Patient Records</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped" id="patientsTable">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>Contact</th>
+                  <th>Last Visit</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (typeof patients !== 'undefined') { %>
+                  <% patients.forEach(function(p) { %>
+                    <tr>
+                      <td><%= p.patient_code || ('P' + String(p.id).padStart(3, '0')) %></td>
+                      <td><%= p.full_name %></td>
+                      <td><%= p.age || '-' %></td>
+                      <td><%= p.gender %></td>
+                      <td><%= p.phone || '' %></td>
+                      <td><%= p.last_visit_date || '' %></td>
+                      <td>
+                        <% if (p.status === 'active') { %>
+                          <span class="badge bg-success">Active</span>
+                        <% } else { %>
+                          <span class="badge bg-warning">Inactive</span>
+                        <% } %>
+                      </td>
+                      <td>
+                        <form method="POST" action="/admin/patients/<%= p.id %>/delete" class="d-inline">
+                          <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                        </form>
+                      </td>
+                    </tr>
+                  <% }) %>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <nav aria-label="Patient pagination" class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
+    </main>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Js start -->
+<script src="../js/js.js"></script>
+<!-- Js end -->
+</body>
+</html>
